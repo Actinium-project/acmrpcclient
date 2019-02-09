@@ -7,13 +7,13 @@ package main
 import (
 	"log"
 
-	"github.com/roasbeef/btcrpcclient"
+	"github.com/Actinium-project/acmrpcclient"
 )
 
 func main() {
 	// Connect to local bitcoin core RPC server using HTTP POST mode.
-	connCfg := &btcrpcclient.ConnConfig{
-		Host:         "localhost:8332",
+	connCfg := &acmrpcclient.ConnConfig{
+		Host:         "localhost:2300",
 		User:         "yourrpcuser",
 		Pass:         "yourrpcpass",
 		HTTPPostMode: true, // Bitcoin core only supports HTTP POST mode
@@ -21,7 +21,7 @@ func main() {
 	}
 	// Notice the notification parameter is nil since notifications are
 	// not supported in HTTP POST mode.
-	client, err := btcrpcclient.New(connCfg, nil)
+	client, err := acmrpcclient.New(connCfg, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

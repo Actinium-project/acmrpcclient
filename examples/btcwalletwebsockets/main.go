@@ -10,37 +10,37 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/roasbeef/btcrpcclient"
-	"github.com/roasbeef/btcutil"
+	"github.com/Actinium-project/acmrpcclient"
+	"github.com/Actinium-project/acmutil"
 	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
 	// Only override the handlers for notifications you care about.
 	// Also note most of the handlers will only be called if you register
-	// for notifications.  See the documentation of the btcrpcclient
+	// for notifications.  See the documentation of the acmrpcclient
 	// NotificationHandlers type for more details about each handler.
-	ntfnHandlers := btcrpcclient.NotificationHandlers{
-		OnAccountBalance: func(account string, balance btcutil.Amount, confirmed bool) {
+	ntfnHandlers := acmrpcclient.NotificationHandlers{
+		OnAccountBalance: func(account string, balance acmutil.Amount, confirmed bool) {
 			log.Printf("New balance for account %s: %v", account,
 				balance)
 		},
 	}
 
-	// Connect to local btcwallet RPC server using websockets.
-	certHomeDir := btcutil.AppDataDir("btcwallet", false)
+	// Connect to local acmwallet RPC server using websockets.
+	certHomeDir := acmutil.AppDataDir("acmwallet", false)
 	certs, err := ioutil.ReadFile(filepath.Join(certHomeDir, "rpc.cert"))
 	if err != nil {
 		log.Fatal(err)
 	}
-	connCfg := &btcrpcclient.ConnConfig{
+	connCfg := &acmrpcclient.ConnConfig{
 		Host:         "localhost:18332",
 		Endpoint:     "ws",
 		User:         "yourrpcuser",
 		Pass:         "yourrpcpass",
 		Certificates: certs,
 	}
-	client, err := btcrpcclient.New(connCfg, &ntfnHandlers)
+	client, err := acmrpcclient.New(connCfg, &ntfnHandlers)
 	if err != nil {
 		log.Fatal(err)
 	}
